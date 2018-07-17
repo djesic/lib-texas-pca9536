@@ -1,0 +1,22 @@
+{
+    "dependencies": {},
+    "description": "Module for PCA9536 I/O expander implemented for the OC01 xChip",
+    "fullname": "lib.texas.pca9536",
+    "git_pointer": "zerynth://zerynth-libs/texas-pca9536",
+    "info": {
+        "chip_manufacturer": "Texas Instruments",
+        "chip_name": "PCA9536",
+        "name": "4-bit I/O Expander",
+        "type": "Interface"
+    },
+    "keywords": [
+        "dc-switch",
+        "oc01",
+        "texas",
+        "gpio"
+    ],
+    "repo": "official",
+    "title": "Texas Instruments PCA9536",
+    "version": "r2.1.2",
+    "whatsnew": "First Release"
+}

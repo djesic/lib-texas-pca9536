@@ -1,0 +1,15 @@
+---
+description: Module for PCA9536 I/O expander implemented for the OC01 xChip
+fullname: lib.texas.pca9536
+info:
+    chip_manufacturer: Texas Instruments
+    chip_name: PCA9536
+    name: 4-bit I/O Expander
+    type: Interface
+keywords:
+- dc-switch
+- oc01
+- texas
+- gpio
+title: Texas Instruments PCA9536
+...

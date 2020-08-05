@@ -3,7 +3,7 @@
 # PCA9536 outputs can also be controlled from within the
 # WolkAbout dashboard.
 #
-# Upload the device template to the WolkAbout platform.
+# Upload the device type to the WolkAbout platform.
 ########################################################
 
 # imports
@@ -84,72 +84,70 @@ except Exception as e:
 
 
 # Provide implementation of a way to read and modify actuator state
-class ActuatorStatusProviderImpl(iot.ActuatorStatusProvider):
-    def get_actuator_status(reference):
-        if reference == actuator_references[0]:
-            value = OC01.getStatus() & 0x01
-            print(value)
-            if value == 0x01:
-                return iot.ACTUATOR_STATE_READY, True
-            else:
-                return iot.ACTUATOR_STATE_READY, False
-        if reference == actuator_references[1]:
-            value = OC01.getStatus() & 0x02
-            print(value)
-            if value == 0x02:
-                return iot.ACTUATOR_STATE_READY, True
-            else:
-                return iot.ACTUATOR_STATE_READY, False
-        if reference == actuator_references[2]:
-            value = OC01.getStatus() & 0x04
-            print(value)
-            if value == 0x04:
-                return iot.ACTUATOR_STATE_READY, True
-            else:
-                return iot.ACTUATOR_STATE_READY, False
-        if reference == actuator_references[3]:
-            value = OC01.getStatus() & 0x08
-            print(value)
-            if value == 0x08:
-                return iot.ACTUATOR_STATE_READY, True
-            else:
-                return iot.ACTUATOR_STATE_READY, False
+def get_actuator_status(reference):
+    if reference == actuator_references[0]:
+        value = OC01.getStatus() & 0x01
+        print(value)
+        if value == 0x01:
+            return iot.ACTUATOR_STATE_READY, True
+        else:
+            return iot.ACTUATOR_STATE_READY, False
+    if reference == actuator_references[1]:
+        value = OC01.getStatus() & 0x02
+        print(value)
+        if value == 0x02:
+            return iot.ACTUATOR_STATE_READY, True
+        else:
+            return iot.ACTUATOR_STATE_READY, False
+    if reference == actuator_references[2]:
+        value = OC01.getStatus() & 0x04
+        print(value)
+        if value == 0x04:
+            return iot.ACTUATOR_STATE_READY, True
+        else:
+            return iot.ACTUATOR_STATE_READY, False
+    if reference == actuator_references[3]:
+        value = OC01.getStatus() & 0x08
+        print(value)
+        if value == 0x08:
+            return iot.ACTUATOR_STATE_READY, True
+        else:
+            return iot.ACTUATOR_STATE_READY, False
 
 
-class ActuationHandlerImpl(iot.ActuationHandler):
-    def handle_actuation(reference, value):
-        print("Setting actuator " + reference + " to value: " + str(value))
-        if reference == actuator_references[0]:
-            if value is False:
-                OC01.writePin(OUT0, False)
-            else:
-                if value is True:
-                    OC01.writePin(OUT0, True)
-        if reference == actuator_references[1]:
-            if value is False:
-                OC01.writePin(OUT1, False)
-            else:
-                if value is True:
-                    OC01.writePin(OUT1, True)
-        if reference == actuator_references[2]:
-            if value is False:
-                OC01.writePin(OUT2, False)
-            else:
-                if value is True:
-                    OC01.writePin(OUT2, True)
-        if reference == actuator_references[3]:
-            if value is False:
-                OC01.writePin(OUT3, False)
-            else:
-                if value is True:
-                    OC01.writePin(OUT3, True)
+def handle_actuation(reference, value):
+    print("Setting actuator " + reference + " to value: " + str(value))
+    if reference == actuator_references[0]:
+        if value is False:
+            OC01.writePin(OUT0, False)
+        else:
+            if value is True:
+                OC01.writePin(OUT0, True)
+    if reference == actuator_references[1]:
+        if value is False:
+            OC01.writePin(OUT1, False)
+        else:
+            if value is True:
+                OC01.writePin(OUT1, True)
+    if reference == actuator_references[2]:
+        if value is False:
+            OC01.writePin(OUT2, False)
+        else:
+            if value is True:
+                OC01.writePin(OUT2, True)
+    if reference == actuator_references[3]:
+        if value is False:
+            OC01.writePin(OUT3, False)
+        else:
+            if value is True:
+                OC01.writePin(OUT3, True)
 
 
 try:
     wolk = iot.Wolk(
         device,
-        actuation_handler=ActuationHandlerImpl,
-        actuator_status_provider=ActuatorStatusProviderImpl,
+        actuation_handler=handle_actuation,
+        actuator_status_provider=get_actuator_status,
     )
 except Exception as e:
     print("Something went wrong while creating the Wolk instance: ", e)
